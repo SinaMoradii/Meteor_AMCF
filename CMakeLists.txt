@@ -40,7 +40,7 @@ file(GLOB MC_DYNAMIC_HDR_DIRS
 # Add them to the global include path
 include_directories(${MC_DYNAMIC_HDR_DIRS})
 
-option(INCLUDE_DRIVERS "Include the drivers in the build" OFF)
+option(INCLUDE_DRIVERS "Include the drivers in the build" ON)
 option(INCLUDE_TESTS "Include the test system in the build" OFF)
 
 if(INCLUDE_DRIVERS)
