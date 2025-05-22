@@ -49,7 +49,7 @@ add_subdirectory(Drivers)
 endif()
 
 #Calling MeteorAPI
-#add_subdirectory(Implementation/API/MeteorAPI)
+add_subdirectory(Implementation/API/MeteorAPI)
 
 
 
