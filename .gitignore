@@ -1,3 +1,4 @@
+.vs/
 Output/logs/*.db
 Output/data/*.db
 Output/*.db

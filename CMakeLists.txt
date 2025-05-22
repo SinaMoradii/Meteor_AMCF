@@ -32,14 +32,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 cmake_minimum_required(VERSION 3.5)
 
 project(LibMC)
+# Gather every Drivers/*/Headers/CppDynamic directory
+file(GLOB MC_DYNAMIC_HDR_DIRS
+  "${CMAKE_SOURCE_DIR}/Drivers/*/Headers/CppDynamic"
+)
 
-option(INCLUDE_DRIVERS "Include the drivers in the build" ON)
+# Add them to the global include path
+include_directories(${MC_DYNAMIC_HDR_DIRS})
+
+option(INCLUDE_DRIVERS "Include the drivers in the build" OFF)
 option(INCLUDE_TESTS "Include the test system in the build" OFF)
 
 if(INCLUDE_DRIVERS)
 message(STATUS "Including Drivers in build")
 add_subdirectory(Drivers)
 endif()
+
+#Calling MeteorAPI
+#add_subdirectory(Implementation/API/MeteorAPI)
+
+
+
+# n/a
+
+# Inject chrono_include.hpp only into C++ compiles, not into C (.c) files:
+if (MSVC)
+  # for MSVC C++ compiler
+  set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} /FI\"${CMAKE_CURRENT_SOURCE_DIR}/Implementation/Common/chrono_include.hpp\"")
+else()
+  # for GCC/Clang C++ compiler
+  set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/Common/chrono_include.hpp")
+endif()
+
+
+#n/a
 
 set(CMAKE_AMCF_PLUGINNAME Examples/LPBFSystem)
 
@@ -290,6 +318,7 @@ target_include_directories(libmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/l
 target_include_directories(libmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/libjpeg-turbo)
 target_include_directories(libmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Libraries)
 target_include_directories(libmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
+#target_link_libraries(libmc PRIVATE MeteorAPI) #MeteorAPI 
 
 
 if(WIN32)
